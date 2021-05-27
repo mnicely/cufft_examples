@@ -43,6 +43,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 message(STATUS "Found CUB: ${CUB_DIR}")
 message(STATUS "Found cuFFTDx: ${CUFFTDX_DIR}")
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 set(CUDART_LIBRARY cudart)
 set(CUFFT_LIBRARY cufft_static)
 set(CULIBOS_LIBRARY culibos)
