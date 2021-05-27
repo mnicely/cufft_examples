@@ -25,41 +25,25 @@ This code runs three scenarios
 ### Execution
 For float
 ```bash
-make
-./cuFFT_vs_cuFFTDx
+mkdir build;
+cd build
+cmake -DCMAKE_CUDA_ARCHITECTURES=75 -DCUB_DIR=${HOME}/workStuff/git_examples/cub -DCUFFTDX_DIR=${HOME}/workStuff/cufft/libcufftdx/include ..
+make -j
 ```
 
-For double
-```bash
-export USE_DOUBLE=1
-make
-./cuFFT_vs_cuFFTDx
-```
-
-To compare results (cuFFT and cuFFTDx are not expected to be exact)
-```bash
-export PRINT=1
-make
-./cuFFT_vs_cuFFTDx
-```
+If you don't pass `-DCMAKE_CUDA_ARCHITECTURES=XX` versions CC60, CC70, CC75, and CC80 will be built.
 
 ### Output
 ```bash
-export PRINT=1
-exportUSE_DOUBLE=1
-make
-./cuFFT_vs_cuFFTDx
+$ D2Z_Z2D/D2Z_Z2D 
+cufftExecD2Z/Z2D - FFT/IFFT - Managed   29.65 ms
+cufftExecD2Z/Z2D - FFT/IFFT - Managed   20.99 ms
+cufftExecC2C - FFT/IFFT - Dx            23.31 ms
 
-FFT Size: 2048 -- Batch: 16384 -- FFT Per Block: 1 -- EPT: 16
-cufftExecC2C - FFT/IFFT - Malloc        XX.XX ms
-cufftExecC2C - FFT/IFFT - Managed       XX.XX ms
-
-Compare results
+Compare results [Malloc/Managed]
 All values match!
 
-cufftExecC2C - FFT/IFFT - Dx            XX.XX ms
-
-Compare results
+Compare results [Malloc/Dx]
 All values match!
 ```
 
