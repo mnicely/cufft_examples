@@ -1,14 +1,14 @@
-# 
+#
 # Copyright (c) 2020, NVIDIA CORPORATION.  All rights reserved.
-# 
-# NVIDIA CORPORATION and its licensors retain all intellectual property
-# and proprietary rights in and to this software, related documentation
-# and any modifications thereto. Any use, reproduction, disclosure or
-# distribution of this software and related documentation without an express
-# license agreement from NVIDIA CORPORATION is strictly prohibited.
-# 
+#
+# NVIDIA CORPORATION and its licensors retain all intellectual property and
+# proprietary rights in and to this software, related documentation and any
+# modifications thereto. Any use, reproduction, disclosure or distribution of
+# this software and related documentation without an express license agreement
+# from NVIDIA CORPORATION is strictly prohibited.
+#
 
-cmake_minimum_required(VERSION 3.14.0)
+cmake_minimum_required(VERSION 3.18)
 
 project(cufftDxSamples)
 
@@ -25,8 +25,8 @@ if(${CUDAToolkit_VERSION_MAJOR} GREATER_EQUAL 11)
   endif()
 endif()
 
-if(NOT DEFINED CMAKE_CUDA_ARCHITECTURES)
-  set(CMAKE_CUDA_ARCHITECTURES 60 70 75 80)
+if(CMAKE_CUDA_ARCHITECTURES LESS 60)
+  set(CMAKE_CUDA_ARCHITECTURES 60 70 75 80 86)
 endif()
 
 if(NOT DEFINED CUB_DIR AND DEFINED ENV{CUB_DIR})
@@ -44,16 +44,6 @@ message(STATUS "Found CUB: ${CUB_DIR}")
 message(STATUS "Found cuFFTDx: ${CUFFTDX_DIR}")
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-
-set(CUDART_LIBRARY cudart)
-set(CUFFT_LIBRARY cufft_static)
-set(CULIBOS_LIBRARY culibos)
-
-if(NOT WIN32)
-  find_library(CUDART_LIBRARY cudart ${CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES})
-  find_library(CUFFT_LIBRARY cufft_static ${CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES})
-  find_library(CULIBOS_LIBRARY culibos ${CMAKE_CUDA_IMPLICIT_LINK_DIRECTORIES})
-endif()
 
 add_subdirectory(C2C_C2C)
 add_subdirectory(Z2Z_Z2Z)
